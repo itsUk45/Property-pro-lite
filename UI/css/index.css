@@ -1,0 +1,257 @@
+html{
+			width: 100vw;
+			margin-left: -8px;
+		}
+		.footer{
+		   text-transform: capitalize;
+		   text-align: center;
+		   padding: 10px;
+		   width: 100vw;
+		   position: relative;
+		  
+		   bottom: 0%;
+		   background: cyan;
+		
+			
+			
+		
+		}
+
+		
+        
+        .navContainer{
+        	background: #333;
+        	display: flex;
+        	list-style: none;
+        	color:white;
+        	position: fixed;
+        	top: 0;
+        	width:100vw;
+        	margin-top: 0px;
+        	padding: 10px;
+
+        	
+
+        }
+
+         .navSearch{
+        	flex: 0;
+        	margin-left: auto;
+        }
+        ul > li{
+        	padding: 5px;
+        	justify-content: space-around;
+        	text-transform: none;
+        }
+        li > a{
+        	color:white;
+        	text-decoration: none;
+
+        }
+        li > a:hover{
+        
+        	background: grey;
+        	padding: 8px;
+        }
+
+       /*media query for a responsive display */
+        @media all and (max-width: 600px){
+        	.navContainer{
+        		flex-wrap: wrap;
+        	}
+        	.navContainer > li{
+        		flex-basis: 50%
+        	}
+        	
+        	.navSearch{
+        		order:1;
+        		margin-left: 0px;
+        	}
+        	.searchButton{
+        		order: 2;
+        	}
+
+        	/*search box over the backgrond image*/
+            .searchFilters{
+            	flex-wrap: wrap;
+            }
+           
+            .searchFButton{
+            	background: #333;
+            	flex:1;
+            	flex-basis: 100%;
+            	font-size: 18px;
+
+            }
+            #searchForm > input{
+            	flex-basis:100%;
+            }
+
+            #searchForm > .searchBox{
+            	text-align: center;
+            	align-items: center;
+            	justify-content: center;
+            	flex:1;
+            	width:100%;
+            	margin-left: 5%;
+
+
+            }
+
+            #searchForm > .searchFButton{
+            	margin-left: 40%;
+            
+
+            }
+
+
+            /*data property1 responsive design*/
+            .propData1{
+            	margin-top: -5px;
+            }
+
+
+           
+
+        }
+
+        /*landing backgriund image*/
+
+        .landingContainer{
+        	margin-top: 4%;
+        	background-image: url("../assets/hotel.jpg");
+        	width: 100vw;
+        	height: 50vh;
+  
+        }
+
+        
+       /*search form* over the background image*/
+       .searchFilters{
+	     display: flex;
+	     align-items: center;
+	     justify-content: center;
+	     position: relative;
+	     top: 25%;
+	     opacity: 1;
+	    
+       }
+
+      
+       #searchForm > .searchBox{
+       	height:6.5vh;
+       	width: 80vh;
+
+       }
+       .searchFButton{
+       	background: #ffd2b3;
+       	height:6vh;
+       	text-transform: uppercase;
+       	margin-right:6px;
+       	color:black;
+       }
+       .searchFButton:hover{
+       	color:white;
+       	background:#ff5252;
+
+       }
+
+       /*contents*/
+       div.contents{
+       	margin-left: 20px;
+       	display: grid;
+       	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+       	grid-auto-rows: 300px;
+       	
+       	grid-gap: 20px;
+       	grid-row-gap: 30px;
+      
+       	margin:10px;
+       	margin-left: 25px;
+
+       }
+
+       .contents > .property{
+       	background: green;
+
+
+
+       }
+
+       .property1{
+       	background-image: url("../assets/house-for-sale.jpg");
+
+       
+       	width:100%;
+       	height: 75%;
+       	border-radius: 10px;
+
+        
+       }
+       .price{
+       	
+       	background: red;
+       	color:white;
+       	margin-top: 0px;
+       	margin-left: 70%;
+       	padding: 8px;
+       	opacity: 0.7;
+       
+       }
+       .propertydata{
+       
+       	display: grid;
+       	grid-template-areas: 
+       	  "name name name"
+       	  "city type type"
+       	  "detail detail detail"
+       	  ;
+       	  margin-top:170px;
+       }
+       .propData1{
+       	
+       	grid-area: name;
+
+       	margin-bottom: -10px;
+
+       	/*margin-top: 200px;*/
+       	
+       }
+       .propData2{
+       
+       	grid-area: city
+
+       	/*margin-top: -15px;*/
+       	
+       }
+       .propData3{
+       
+       	grid-area:type;
+        /*margin-bottom: -15px;
+        border: 1px solid red;*/
+       	
+       }
+       .propData4{
+
+       	grid-area: detail;
+       	text-transform: uppercase;
+        background: #ffd2b3;
+       	color: black;
+       
+       	text-align: center;
+       	height: 6vh;
+       	margin-top: -14px;
+       	display: flex;
+       	align-items: center;
+       	justify-content: center;
+       	border: 1px solid black;
+       	width: 25%;
+       	margin-left: 35%;
+       	opacity: 0.7;
+       	
+       }
+       .propData4:hover{
+       	background: #ff5252;
+       	color:white;
+       	border:none;
+       }
