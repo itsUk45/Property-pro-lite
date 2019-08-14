@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Account Signup</title>
+	<link rel="stylesheet" type="text/css" href="../css/index.css">
+	<link rel="stylesheet" type="text/css" href="../css/register.css">
+</head>
+<body>
+
+	<!-- grid container for the page -->
+	<div class="registerGrid">
+
+		<!-- left side platform description -->
+		<div class="description">
+			<p class="goToHome"><a href="#hello" >PProLite</a></p>
+			<p class="pWelcome">Welcome to PProLite,Property Pro Lite is a platform where people can create and/or search properties for sale or rent. </p>
+			<!-- <img src="../assets/hotel.jpg" width="50%" height="50%"> -->
+		</div>
+
+		<!-- signup form div -->
+		<div class="register">
+			<a id="closeTab" href="index.html">X</a>
+			<h1>Signup Form</h1>
+			<form action="#" method="POST" enctype="multipart/form-data">
+				<label for="email">Email</label><br>
+				<input type="email" name="email" placeholder="enter email" required><br>
+
+				<label for="fname">First Name</label><br>
+				<input type="text" name="fname" placeholder="enter first name" required><br>
+
+				<label for="lname">Last Name</label><br>
+				<input type="text" name="lname" placeholder="enter last name" required><br>
+
+				<label for="number">Mobile Number</label><br>
+				<input type="number" name="number" placeholder="enter contact number" required><br>
+
+				<label for="isagent">Agent?</label><br>
+				<select class="isAgent" required>
+					<option selected disabled>Are you an Agent?</option>
+					<option>YES</option>
+					<option>NO</option>
+				</select><br>
+
+				<label for="address">Address</label><br>
+				<input type="text" name="email" placeholder="enter address ex-KK SS" required><br>
+
+
+				<label for="password">Password</label><br>
+				<input type="Password" name="email" placeholder="create a strong password" required><br>
+
+                 
+                 <input id="submitButton" type="submit" name="submit" value="SIGNUP">
+                   <p id="signin">Already have an account? <a href="signin.html">Login</a></p>
+				
+
+
+				
+			</form>
+
+		</div>
+
+		<!-- page footer -->
+		<div class="footer">
+			<footer class="footer"> 
+				&copy; 2019  PProLite network
+			</footer>
+		</div>
+		
+	</div>
+</body>
+</html>
