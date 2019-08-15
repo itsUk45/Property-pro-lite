@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Account Signi</title>
+	<link rel="stylesheet" type="text/css" href="../css/index.css">
+	<link rel="stylesheet" type="text/css" href="../css/register.css">
+	<link rel="stylesheet" type="text/css" href="../css/signin.css">
+	<style type="text/css">
+		
+	</style>
+</head>
+<body>
+
+	<!-- grid container for the page -->
+	<div class="registerGrid">
+
+		<!-- left side platform description -->
+		<div class="description">
+			<p class="goToHome"><a href="#hello" >PProLite</a></p>
+			<p class="pWelcome">Welcome to PProLite,Property Pro Lite is a platform where people can create and/or search properties for sale or rent. </p>
+			<!-- <img src="../assets/hotel.jpg" width="50%" height="50%"> -->
+		</div>
+
+		<!-- signup form div -->
+		<div class="register">
+			<a id="closeTab" href="index.html">X</a>
+			
+			<div class="signinGrid" id="signinGrid">
+			    <h1>Signing in as?</h1>
+				<BUTTON type="BUTTON"  class="userButton" onClick="userButton()">USER</BUTTON>
+			    <BUTTON type="BUTTON" class="agentButton" onClick="agentButton()">AGENT</BUTTON>
+			    <p class="signinRoleSMS"></p>
+			    <script type="text/javascript">
+			    	const userButton = ()=>{
+			    		const user = document.querySelector(".signinRoleSMS").innerHTML="USER Signin";
+			    	};
+
+			    	const agentButton= ()=>{
+			    		const user = document.querySelector(".signinRoleSMS").innerHTML="AGENT Signin";
+			    	};
+			    </script>
+         
+			
+			
+			<form action="#" method="POST" enctype="multipart/form-data" class="signinForm">
+				<label for="email">Email</label><br>
+				<input type="email" name="email" placeholder="enter email"size="30" required><br>
+
+				<!-- <label for="isagent">Agent?</label><br>
+				<select class="isAgent" required>
+					<option selected disabled>Are you an Agent?</option>
+					<option>YES</option>
+					<option>NO</option>
+				</select><br> -->
+
+				<label for="password">Password</label><br>
+				<input type="Password" name="email" placeholder="create a strong password" size="30" required><br>
+
+                 
+                 <input id="submitButton" type="submit" name="submit" value="SIGNIN">
+                   <p id="signin">Don't have an account? <a href="signup.html">Signup</a></p>
+				
+			</form>
+			</div>
+
+		</div>
+
+		<!-- page footer -->
+		<div class="footer">
+			<footer class="footer"> 
+				&copy; 2019  PProLite network
+			</footer>
+		</div>
+		
+	</div>
+</body>
+</html>

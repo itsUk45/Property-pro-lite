@@ -1,0 +1,57 @@
+.signinGrid{
+			display: grid;
+			grid-template-areas: 
+			"signtext signtext"
+			"userButton agentButton "
+			"role role"
+			"form form  ";
+			margin-top: -250px;
+
+		}
+		.signinGrid > h1{
+			grid-area:signtext;
+			display: grid;
+			align-items: center;
+			justify-content: center;
+			color: #444444;
+			font-family:serif;
+		}
+
+		.userButton{
+			grid-area:userButton;
+			padding: 2px;
+			background: #696464;
+			color: white;
+
+		}
+		.agentButton{
+			grid-area:agentButton;
+			background: #992e24;
+			color: white;
+		}
+		.signinRoleSMS{
+			grid-area: role;
+			margin-bottom: -5px;
+			margin-left: 30%;
+			font-weight: bold;
+			color: #444445;
+			font-size: 18px;
+		}
+
+		.signinForm{
+			grid-area:form;
+			margin-top: 15px;
+
+		}
+		.signinForm > input{
+			padding: 5px;
+			text-transform: none;
+		}
+
+		@media all and (max-width: 600px){
+			#signinGrid {
+				opacity: 0.9;
+				margin-top: 2rem;
+				
+			}
+		}
