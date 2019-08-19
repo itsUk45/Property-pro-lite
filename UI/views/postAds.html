@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add property</title>
+	<style type="text/css">
+		html{
+			background: #aaa;
+		}
+		form{
+             margin-left: 25%;
+            
+		}
+
+		form>label, form>input{
+			width: 50%;
+			height: 4vh;
+		
+		}
+		
+		form>select{
+			width: 50.5%;
+			height: 5vh;
+		}
+		form>textarea{
+			width: 49.5%;
+		}
+
+		form>input, form>select, form>textarea{
+			
+			display: flex;
+			
+			background:#ddd;
+			font-family: sans-serif;
+			font-size: 14px;
+		}
+       #postButton{
+       	background: green;
+       	color: white;
+       	margin-bottom: 5%;
+       }
+
+	</style>
+</head>
+<body>
+<!--  -->
+<div class="postAdsForm">
+	<form action="agentboard.html" method="POST" enctype="multipart/form-data">
+				<label for="name">Name</label>
+				<input type="text" name="name" placeholder="enter property name" required><br>
+
+				<label for="status">Status</label>
+				<select class="propertyStatus" required>
+					<option selected>Available</option>
+					<option>Sold</option>
+					
+				</select>
+				<br>
+
+				<label for="price">Price</label>
+				<input type="number" name="price" placeholder="enter Price" required><br>
+ 
+
+				<label for="state">State</label>
+				<input type="text" name="state" placeholder="enter state or province" required><br>
+
+				<label for="city">City</label>
+				<input type="text" name="city" placeholder="enter city where property is located" required><br>
+
+
+				<label for="address">Address</label>
+				<input type="text" name="email" placeholder="enter address ex-KK SS" required><br>
+
+				<label for="type">Type</label>
+				<select class="PropetyType" required>
+					<option selected disabled>Select Property type</option>
+					<option>Apartment</option>
+					<option>2 bed room</option>
+					<option>3 bed room</option>
+					<option>hotel</option>
+					<option>house</option>
+					<option>Camp</option>
+				</select><br>
+
+
+				<label for="image">Picture</label>
+				<input class="uploadImage" type="FILE" name="image" required><br>
+
+				<label for="description">Description</label><br>
+				<textarea name="description" rows="5" cols="30">Propery Description</textarea><br>
+
+                 
+                 <input id="postButton" type="submit" name="submit" value="POST"accept="image/*">
+              
+				
+
+
+				
+			</form>
+</div>
+</body>
+</html>
