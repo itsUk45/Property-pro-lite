@@ -1,0 +1,320 @@
+
+.contentContainer{
+	background: #aaa;
+	display: grid;
+	grid-template-areas: 
+	"sideContent mainContent mainContent mainContent mainContent"
+	"sideContent mainContent mainContent mainContent mainContent";
+	
+	margin-left: 0%;
+
+}
+
+
+/*side content working starts*/
+.sideContentArea{
+	grid-area: sideContent;
+	background:#aaa;
+	width: 19vw;
+	height: 100vh;
+	margin-top: 0%;
+	position: fixed;
+
+}
+.sideContentArea>img{
+	width: 50%;
+	margin-left: 25%;
+	margin-top: 5%;
+}
+.sideContentArea>div>img{
+  width: 15%;
+}
+.sideContentArea>.messages>img{
+  width: 15%;
+
+}
+.sideContentArea>div>a>img{
+  width: 15%;
+}
+
+.addProperty,.notifications,.messages,.logout{
+	height: 10%;
+	/*background: #ffe;*/
+	padding: 0px;
+	margin-left: 10%;
+	margin-top: 0%;
+}
+.addProperty>a, .logout>a{
+	color:inherit;
+	text-decoration: none;
+}
+
+.addProperty >a:hover, .logout>a:hover{
+	background: grey;
+	
+}
+	
+
+
+span{
+	margin-right: 5%;
+	
+}
+/*side content ends*/
+
+
+
+
+
+
+
+.mainContentArea{
+	grid-area: mainContent;
+	background:#ccc;
+	padding: 10px;
+	margin-left: 18.5%;
+}
+
+
+/*styling the table*/
+table{
+	background: #fefe;
+}
+.tableHead{
+	background: #d8cbbb;
+	text-transform: uppercase;
+}
+tr> td{
+background: #eeeeee;
+}
+.modifyAdsBtn{
+	display: flex;
+}
+td>button{
+	margin-top: 10%;
+}
+
+td> button:nth-child(1){
+	background: #048998;
+	color: white;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+/*td> button:nth-child(1)>a{
+	color: white;
+	text-decoration: none;
+	overflow: none;
+}
+td> button:nth-child(1)>a:hover{
+	background: #71a0a5;
+}*/
+
+td> button:nth-child(2){
+	background: #f69314;
+	color: white;
+	text-transform: uppercase;
+}
+
+td> button:nth-child(3){
+	background: #c40b13;
+	color: white;
+	text-transform: uppercase;
+}
+
+
+
+/*.sideContentArea >div>img {
+	width: 15vw;
+	height: 5vh;
+	margin: 5% 0% 0% 5%;
+
+}*/
+
+/*.addPropertyHolder{
+	background: red;
+	grid-area: propertyHolder;
+	height:0vh;
+
+}
+.addProperty{
+	/*width: 700%;
+	margin-left: -250%;
+	margin-bottom: 10%;
+	background: green;
+	grid-area:addProperty;
+
+}
+
+
+.notificationsHolder{
+	background: red;
+	grid-area: notificationsHolder;
+	width: 15%;
+	height: 5vh;
+}
+.notifications{
+	/*width: 700%;
+	margin-left: -250%;
+	margin-bottom: 10%;
+	background: blue;
+	grid-area:notifications;
+
+}
+
+
+.messagesHolder{
+	background: red;
+	grid-area: messagesHolder;
+	width: 15%;
+	height: 5vh;
+}
+.messages{
+	/*width: 700%;
+	margin-left: -250%;
+	margin-bottom: 10%;
+	background: green;
+	grid-area:messages;
+
+}
+
+.logoutHolder{
+	/*width: 700%;
+	margin-left: -250%;
+	margin-bottom: 10%;
+	background: red;
+	grid-area:logoutHolder;
+	width: 15%;
+	margin-left: 45%;
+	height: 5vh;
+	
+
+}
+
+.logout{
+	background: green;
+	grid-area: logout;
+
+}*/
+
+
+
+
+
+/*.addProperty,.notifications, .messages, .logout{
+	width:15%;
+	padding: 5px;
+	margin-left: 35%;
+	margin-bottom: 0%;
+}
+.sideContentArea>div>span {
+	display: grid;
+	justify-content: center;
+	align-items: center;	
+}
+
+.logout:hover{
+	
+	background: #c5c5c5;
+	border-radius: 100px;
+}
+*/
+
+/*content styles*/
+/*defining a grid template area and giving it a custom name ie adsH for adsHeading*/
+.mainContentArea{
+	/*grid-template-areas: 
+	"name type price address image description created-on status action"
+	"cname ctype cprice caddress cimage cdescription ccreated-on cstatus caction";
+*/
+}
+
+.adsHeading{
+  /*grid-area: adsH;*/
+  background: cyan;
+  grid-template-columns: 400px 1fr 1fr;
+  grid-auto-rows: 20px;
+  grid-gap: 20px;
+  /*grid-template-areas: 
+  "name type price address image description created-on status action"*/
+}
+/*.name{
+	grid-area: name;
+	color:red;
+}
+.type{
+	grid-area: type;
+	color:green;
+}
+.Price{
+	grid-area: price;
+	color:red;
+}
+.address{
+	grid-area: address;
+	color:green;
+}
+
+.image{
+	grid-area: image;
+	color:red;
+}
+.description{
+	grid-area: description;
+	color:green;
+}
+.created-on{
+	grid-area: created-on;
+	color:red;
+}
+.status{
+	grid-area: status;
+	color:green;
+}
+.action{
+	grid-area:action;
+	color:red;
+}
+.adsContent{
+	grid-area:adsC;
+	background:green;
+}
+
+
+.cname{
+	grid-area: cname;
+	color:red;
+}
+.ctype{
+	grid-area: ctype;
+	color:green;
+}
+.cPrice{
+	grid-area: cprice;
+	color:red;
+}
+.caddress{
+	grid-area: caddress;
+	color:green;
+}
+
+.cimage{
+	grid-area: cimage;
+	color:red;
+}
+.cdescription{
+	grid-area: cdescription;
+	color:green;
+}
+.ccreated-on{
+	grid-area: ccreated-on;
+	color:red;
+}
+.cstatus{
+	grid-area: cstatus;
+	color:green;
+}
+.caction{
+	grid-area:caction;
+	color:red;
+}*/

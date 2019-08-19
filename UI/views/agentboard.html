@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Agent dashboard</title>
+	<link rel="stylesheet" type="text/css" href="../public/css/index.css">
+	<link rel="stylesheet" type="text/css" href="../public/css/agentboard.css">
+	<link rel="javascript" type="text/js" href="../public/js/agent.js">
+	<style type="text/css">
+		.footer{
+			position: static;
+			bottom: -0%;
+			margin-bottom: -2%;
+			background: #000;
+		}
+		
+
+
+	</style>
+	<script type="text/javascript" href="../public/js/agent.js">
+		
+	</script>
+</head>
+<body>
+<!-- nav bar -->
+<div style="margin-top: 49px;">
+	
+		<nav class="top-nav">
+			<ul class="navContainer" >
+			<li class="home wrapping">PProLite </li>
+			
+			<input  class="navSearch wrapping" type="text" name="navSearch" placeholder="What would you like to search?">
+			<button class="searchButton wrapping" type="button">search</button>
+			
+				
+			
+			
+			<ul>
+			
+		</nav>
+</div>
+<!-- main content area -->
+<div class="contentContainer">
+	<div  class="sideContentArea">
+	     <img src="../public/assets/user-solid.svg" alt="agent profile photo">
+	     <p style="text-align: center">  Welcome! agentName</p>
+	     
+           
+	        <div class="addProperty">
+	        	<a  href="postAds.html"><img src="../public/assets/plus-circle-solid.svg">
+	     	
+	     		<span>add property</span></a>
+	        </div> 
+
+	     	<div  class="notifications">
+	     		<img  src="../public/assets/bell-solid.svg">
+	     	<span > notifications</span>
+	     	</div>
+	     	
+	     
+	     
+	     <div class="messages">
+	     	<img src="../public/assets/comments-solid.svg">
+	     	<span>messages</span>
+	     	
+	     </div>
+
+	     <div  class="notifications">
+	     		<img  src="../public/assets/hands-solid.svg">
+	     	<span > Available Properties</span>
+	     </div>
+
+	      <div  class="notifications">
+	     		<img  src="../public/assets/hand-holding-usd-solid.svg">
+	     	<span > Sold Properties</span>
+	     </div>
+
+	     
+	    
+	     <div class="logout">
+	     	<a href="index.html">	<img src="../public/assets/sign-out-alt-solid.svg">
+	     	<span>logout</span></a>
+	     </div>
+
+	</div>
+	<div class="mainContentArea">
+	 posted ads that can be updated, mark as sold , and deleted
+
+	 <!-- grid looks impossible when viewed on small screens
+	 need to explore table or other layout alternatives -->
+
+	<!--  heading div 
+	 <div class="adsHeading">
+
+	 	<span class="name">Name name  name name name name name name name name name name name</span>
+	 	<span class="type">Type type type type type type type type type type type type </span>
+	 	<span class="Price">Price </span>
+	 	<span class="address">Address</span>
+	 	<span class="image">Image</span>
+	 	<span class="description">Description</span>
+	 	<span class="created-on">Created on</span>
+	 	<span class="status">Status</span>
+	 	<span  class="action">Action</span>
+	 </div>
+
+	 posted ads div 
+	 <div class="adsContent">
+
+ 		
+	 	<span class="cname">Home stay beauty</span>
+	 	<span class="ctype">Apartment</span>
+	 	<span class="cPrice">FRW 2000 </span>
+	 	<span class="caddress">Kigali city arena</span>
+	 	<span class="cimage">some images</span>
+	 	<span class="cdescription">beautiful view Kigali</span>
+	 	<span class="ccreated-on">2019</span>
+	 	<span class="cstatus">Available</span>
+	 	<span class="caction">
+	 		<button>Update</button>
+	 		<button>Mark</button>
+	 		<button>Delete</button>
+	 	</span>
+	 </div> -->
+
+
+	 <!-- table layout  for ads-->
+	 <table>
+	 	<tr class="tableHead">
+	 		<th>Photo</th>
+	 		<th>Name</th>
+	 		<th>Type</th>
+	 		<th>Price</th>
+	 		<th>Address</th>
+	 		<th>Description</th>
+	 		<th>Posted-on</th>
+	 		<th>Status</th>
+	 		<th >Action</th>
+	 	</tr>
+       <!-- below row will be filled with dyamic data from database -->
+	 	<tr>
+	 		<td><img src="../public/assets/hotel.jpg" width="100%" height="1%"></td>
+	 		<td>Home stay beauty</td>
+	 		<td>aprtment</td>
+	 		<td>300$</td>
+	 		<td>kigali height</td>
+	 		<td>the best home stay residency for your holiday</td>
+	 		<td>2018</td>
+	 		<td>Sold</td>
+	 		<td class="modifyAdsBtn">
+	 			<button onclick="updateAd()">Update </button>
+	 			<button onclick="markAsSold()">change status</button>
+	 			<button onclick="deleteAd()">delete</button>
+	 		</td>
+	 	</tr>
+	 	<!-- for time being, multiple rows are added statically to hold data as a placeholder -->
+	 	<tr>
+	 		<td><img src="../public/assets/house-for-sale.jpg" width="100%" height="1%"></td>
+	 		<td>Home stay beauty</td>
+	 		<td>aprtment</td>
+	 		<td>300$</td>
+	 		<td>kigali height</td>
+	 		<td>the best home stay residency for your holiday</td>
+	 		<td>2019</td>
+	 		<td>Available</td>
+	 		<td class="modifyAdsBtn">
+	 			<button onclick="updateAd()">Update </button>
+	 			<button onclick="markAsSold()">change status</button>
+	 			<button onclick="deleteAd()">delete</button>
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td><img src="../public/assets/hotel.jpg" width="100%" height="1%"></td>
+	 		<td>Home stay beauty</td>
+	 		<td>aprtment</td>
+	 		<td>300$</td>
+	 		<td>kigali height</td>
+	 		<td>the best home stay residency for your holiday</td>
+	 		<td>2019</td>
+	 		<td>Sold</td>
+	 		<td class="modifyAdsBtn">
+	 			<button onclick="updateAd()">Update </button>
+	 			<button onclick="markAsSold()">change status</button>
+	 			<button onclick="deleteAd()">delete</button>
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td><img src="../public/assets/house-for-sale.jpg" width="100%" height="1%"></td>
+	 		<td>Home stay beauty</td>
+	 		<td>aprtment</td>
+	 		<td>300$</td>
+	 		<td>kigali arena</td>
+	 		<td>the best home stay residency for your holiday</td>
+	 		<td>2017</td>
+	 		<td>Available</td>
+	 		<td class="modifyAdsBtn">
+	 			<button onclick="updateAd()">Update </button>
+	 			<button onclick="markAsSold()">change status</button>
+	 			<button onclick="deleteAd()">delete</button>
+	 		</td>
+	 	</tr>
+
+
+	 	<!-- below row will be filled with dyamic data from database -->
+	 	<tr>
+	 		<td><img src="../public/assets/hotel.jpg" width="100%" height="1%"></td>
+	 		<td>Home stay beauty</td>
+	 		<td>house</td>
+	 		<td>200$</td>
+	 		<td>Convention area</td>
+	 		<td>the best home stay residency for your holiday</td>
+	 		<td>2019</td>
+	 		<td>Available</td>
+	 		<td class="modifyAdsBtn">
+	 			<button onclick="updateAd()">Update </button>
+	 			<button onclick="markAsSold()">change status</button>
+	 			<button onclick="deleteAd()">delete</button>
+	 		</td>
+	 	</tr>
+	 	<!-- for time being, multiple rows are added statically to hold data as a placeholder -->
+	 	<tr>
+	 		<td><img src="../public/assets/house-for-sale.jpg" width="100%" height="1%"></td>
+	 		<td>Home stay beauty</td>
+	 		<td>Hotel room</td>
+	 		<td>500$</td>
+	 		<td>kigali height</td>
+	 		<td>the best home stay residency for your holiday</td>
+	 		<td>2019</td>
+	 		<td>Available</td>
+	 		<td class="modifyAdsBtn">
+	 			<button onclick="updateAd()">Update </button>
+	 			<button onclick="markAsSold()">change status</button>
+	 			<button onclick="deleteAd()">delete</button>
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td><img src="../public/assets/hotel.jpg" width="100%" height="1%"></td>
+	 		<td>Home stay beauty</td>
+	 		<td>aprtment</td>
+	 		<td>300$</td>
+	 		<td>kigali height</td>
+	 		<td>the best home stay residency for your holiday</td>
+	 		<td>2019</td>
+	 		<td>Available</td>
+	 		<td class="modifyAdsBtn">
+	 			<button onclick="updateAd()">Update </button>
+	 			<button onclick="markAsSold()">change status</button>
+	 			<button onclick="deleteAd()">delete</button>
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td><img src="../public/assets/house-for-sale.jpg" width="100%" height="1%"></td>
+	 		<td>Home stay beauty</td>
+	 		<td>aprtment</td>
+	 		<td>300$</td>
+	 		<td>kigali height</td>
+	 		<td>the best home stay residency for your holiday</td>
+	 		<td>2019</td>
+	 		<td>Available</td>
+	 		<td class="modifyAdsBtn">
+	 			<button onclick="updateAd()">Update </button>
+	 			<button onclick="markAsSold()">change status</button>
+	 			<button onclick="deleteAd()">delete</button>
+	 		</td>
+	 	</tr>
+
+   		
+
+	 </table>
+	</div>
+	
+</div>
+
+
+
+<!-- nav bar -->
+<div>
+	<footer class="footer"> 
+		&copy; 2019  PProLite network
+	</footer>
+</div>
+
+
+</body>
+</html>
