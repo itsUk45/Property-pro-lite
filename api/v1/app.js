@@ -12,4 +12,4 @@ app.get('/greet', (req, res) => {
  res.json('Greeting from nodejs');
 });
 
-app.listen('3000', (req, res) => console.log('listenting on port number 3000'));
+app.listen('5000', (req, res) => console.log('listenting on port number 5000'));
