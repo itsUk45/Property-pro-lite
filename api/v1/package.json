@@ -9,10 +9,10 @@
   "scripts": {
     "start": "node bin/prod",
     "build": "babel app.js -d lib",
-    
     "dev": "nodemon --exec babel-node ./app.js",
     "lint": "eslint",
-    "test": "mocha --require @babel/register"
+    "test": "mocha --require @babel/register app.js",
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "author": "uk45",
   "license": "MIT",
@@ -33,9 +33,11 @@
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.26.0",
     "chai": "^4.2.0",
+    "coveralls": "^3.0.6",
     "eslint": "^6.2.2",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
-    "mocha": "^6.2.0"
+    "mocha": "^6.2.0",
+    "nyc": "^14.1.1"
   }
 }
