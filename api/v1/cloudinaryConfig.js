@@ -1,9 +1,9 @@
 import  cloudinary from 'cloudinary';
 
 cloudinary.config({
-	cloud_name: 'ddrxcfhxk',
-	api_key: '546586939958268',
-	api_secret: 'kVOO1bfqA5UrR3E6h7KWl3n8jF0'
+	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+	api_key: process.env.api_key,
+	api_secret: process.env.api_secret
 });
 
 
@@ -19,5 +19,5 @@ exports.uploads = (file) =>{
 
 
 //separate setup for  cloudinary, details where on the property route before
-const CLOUDINARY_URL = " https://api.cloudinary.com/v1_1/ddrxcfhxk/upload";
-const CLOUDINARY_UPLOAD_PRESET = "gcupp3vx";
+const CLOUDINARY_URL = process.env.CLOUDINARY_URL;
+const CLOUDINARY_UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET;
