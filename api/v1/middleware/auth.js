@@ -1,19 +1,10 @@
 import jwt from 'jsonwebtoken';
-
+let decodedToken;
 const checkTokens = (req, res, next) => {
   try {
-    const decoded = jwt.verify(req.body.data.token, 'secretKeys');
-    console.log({
-      status: 'success',
-      message: 'Auth successful, you can now accesss this page: ',
-    });
-    // res.status(200).send({
-    //    		"status":"success",
-    //    		"message":"Auth successful, you can now accesss this page: "
-    //    	});
+    decodedToken = jwt.verify(req.body.data.token, 'secretKeys');
     next();
   } catch (error) {
-    	console.log(`Auth failed:::${error}`);
     	res.status(401).send({ // 401 is unauthorised access 409 is conflicting request
     		status: 'error',
     		message: `Auth failed: ${error}`,
@@ -41,4 +32,4 @@ const checkTokensFormData = (req, res, next) => {
 };
 
 // checkTokens();
-export { checkTokens, checkTokensFormData };
+export { checkTokens, checkTokensFormData, decodedToken };
