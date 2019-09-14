@@ -23,7 +23,7 @@ const postProperty = async (req, res, next) => {
   try {
   const decoded = verifyUser(token, res); //verify user tokens
   // Create property if user is authenticated with JWT
-  const propertyObj  = new Property(id, status,type, state, city, address, price, new Date(), req.file.path, decoded.email);
+  const propertyObj  = new Property(id, status,type.toLowerCase(), state, city, address, price, new Date(), req.file.path, decoded.email);
  
     const data = await propertyObj.createProperty();
     //property output to send as response as per the api specification
@@ -156,7 +156,8 @@ const getAllProperty = (req, res) => {
 
 // Display all properties of specified types ie Properties with type= Room, House, Aprtment, Camp etc
 const getAllSpecificTypesProperty = async (req, res) => {
-	const type = req.query.type; // BLOCKERS, escape cases ex ROOM=Room=room are same
+	const rawType = req.query.type; // BLOCKERS, escape cases ex ROOM=Room=room are same
+  const type =rawType.toLowerCase(); // Above blocker resolved 14/09/2019
   try {
     const properties = await propertyStorage.filter( properties => properties.type === type);
     if(properties.length ===0) return res.status(404).json({'status':'error', 'error': `Properties with type ${type} Not Found`});
