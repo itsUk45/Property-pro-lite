@@ -57,7 +57,7 @@ const signin = async (req, res) => {
       if(!result) return res.status(400).json({'status': 'error','error' : ` password mismatch`});
       // get user details to display 
       const {id, email, first_name, last_name, phone_number, address, is_agent, gender, password} = userFound.rows[0];
-      const token = GenerateTokens(token, res);
+      const token = GenerateTokens(email, res);
       const outPut = userOutput(token, id, first_name, last_name,email, phone_number,address, is_agent, gender, password);
       res.status(200).json(outPut);
       // BLOCKER:  Don't generate new tokens when signup token is still valid
