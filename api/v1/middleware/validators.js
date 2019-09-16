@@ -11,7 +11,7 @@ const signupV = (data) => {
 			lastName: Joi.string().required(),
 			phoneNumber: Joi.number().required(),
 			address: Joi.string().required(),
-			isAgent: Joi.string().required(),
+			isAgent: Joi.boolean().required(),
 			gender: Joi.string().required(),
 			password: Joi.string().min(5).required()
 

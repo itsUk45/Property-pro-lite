@@ -1,55 +1,175 @@
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import uuidv1 from 'uuid/v1';
-import { Users, USERS } from '../models/Users';
-import { signupV } from '../middleware/validators';
-import {userOutput} from '../helpers/userHelper';
+import {userOutput, serverError} from '../helpers/userHelper';
 import {GenerateTokens, verifyUser} from '../helpers/jwtAuthHelper.js';
+import {pool} from '../models/configDB';
+import {User} from '../models/Users';
 
-let token =null;
-const signup = (req, res, next) => {
-  const {
-    email, firstName, lastName, phoneNumber, address, isAgent, gender, password,
-  } = req.body.data;
-
-  // function to create new user if user doesn't exist in the data storage
-  const userCreation = () => {
+/*
+...............................................................................................
+IMPLEMENTATION USING POSTGRESQL DATABASE INSTEAD OF NON PERSISTENT STORAGE i.e  DATA STRUCTURE
+...............................................................................................
+*/
+let token= null;
+// signup and put the data into a possgres database
+const signup = async (req, res) => {
+  const {email, firstName, lastName, phoneNumber, address, isAgent, gender, password,} = req.body.data;
+  // BLOCKER, leaving existings user check to the DB constraint check rather than custom validations
+  try{
     const id = uuidv1();
-    const saltRounds = 10;
-    const hashedPassword = bcrypt.hashSync(password, saltRounds); // sync method
-    const userObject = new Users(id, email, firstName, lastName, phoneNumber,
-                                address, isAgent, gender, hashedPassword, gender);
-    const createNewUser = userObject.createUser(); // await the promise here using await
-    token = GenerateTokens(email);
-    const userOut = userOutput(token,id, firstName, lastName, email, phoneNumber,
-                               address, isAgent, gender, hashedPassword);
-
-   return res.status(201).send(userOut);
-  };
-
-  if (USERS.length === 0) { // Check if there's no user in USERS array, then create new user
-    userCreation(); // actual user is created
-  } else {
-    // Iterate USERS storage to find if there's a user with the submitted email
-    let user =undefined;
-    USERS.forEach((elements, index, array) => {
-      if(elements.email === email){
-        user = USERS[index];
-      }
-    });
-
-    if(user !=undefined){
-      res.status(409).send({ // user already exist
-          status: 'error',
-          error: `User with email ${email} already exist please use different credentials`,
-        });
+    const hashPassword = bcrypt.hashSync(password, 10); // hashing the plain password using bcrypt
+    const users = new User(id,email, firstName, lastName, phoneNumber, address, isAgent, gender, hashPassword);
+    // retrieve user with the corresponding email 
+    const userFound = await users.findUserByEmail(email);
+    if(userFound.rows.length===0){
+      // can create user with the supplied data
+      await users.createUser();
+      token = GenerateTokens(email); // update the token variable with the newly generated token
+      const outPut = userOutput(token, id, firstName, lastName, email, phoneNumber, address, isAgent, gender, hashPassword)
+      res.status(201).json(outPut);
     }else{
-      userCreation(); // actual user is created
+      // user with the given email exist, and we cannot create duplicate,postgresql db constraint
+      res.status(409).json({
+        'status': 'error',
+        'error': `user with the email ${email} already exist`
+      });
     }
+    
+  }catch(error){
+    // incase any error occurs in the try block, we handle it here with a 500 status to the requester
+    serverError(error, res);
   }
+
+
 };
 
-//Signin user 
+
+// signin using data from postgres database
+const signin = async (req, res) => {
+  // get email from the request body data
+  const {email,password} = req.body.data;
+  try{
+    const users = new User();
+    const userFound = await users.findUserByEmail(email);
+    if(userFound.rows.length===0) return res.status(404).json({'status': 'error', 'error': 'User not found'});
+    // validate passwords using bcrypt compare
+    bcrypt.compare(password, userFound.rows[0].password, (err, result) => {
+      if(!result) return res.status(400).json({'status': 'error','error' : ` password mismatch`});
+      // get user details to display 
+      const {id, email, first_name, last_name, phone_number, address, is_agent, gender, password} = userFound.rows[0];
+      const token = GenerateTokens(token, res);
+      const outPut = userOutput(token, id, first_name, last_name,email, phone_number,address, is_agent, gender, password);
+      res.status(200).json(outPut);
+      // BLOCKER:  Don't generate new tokens when signup token is still valid
+      // Cannot read decoded.email when signup route is not hit, because token is still null  . 16/09/2019
+         /*  SOME error occuring  16/09/2019, Checkout later.
+          const decoded = verifyUser(token, res);
+          if(decoded.email === email){
+            return  res.status(200).json({
+            token,
+            email,
+            password});
+          }else{
+          // generate new token
+          token = GenerateTokens(email);
+          res.status(200).json({
+            token,
+            email,
+            password});
+        }
+        */
+    } );
+
+
+
+  }catch(error) {
+    serverError(error, res);
+  }
+
+};
+
+
+
+export default { signup, signin };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+.......................................................           .
+.......................................................        ... ...
+IMPLEMENTATION USING DATA STRUCTURE INSTEAD OF DATABASE          ...
+.......................................................       ....  ....
+.......................................................      .....   .....
+
+// let token =null;
+// const signup = async (req, res, next) => {
+//   const {
+//     email, firstName, lastName, phoneNumber, address, isAgent, gender, password,
+//   } = req.body.data;
+
+//   // function to create new user if user doesn't exist in the data storage
+//   const userCreation = () => {
+//     const id = uuidv1();
+//     const saltRounds = 10;
+//     const hashedPassword = bcrypt.hashSync(password, saltRounds); // sync method
+//     const userObject = new Users(id, email, firstName, lastName, phoneNumber,
+//                                 address, isAgent, gender, hashedPassword, gender);
+//     const createNewUser = userObject.createUser(); // await the promise here using await
+//     token = GenerateTokens(email);
+//     const userOut = userOutput(token,id, firstName, lastName, email, phoneNumber,
+//                                address, isAgent, gender, hashedPassword);
+
+//    return res.status(201).send(userOut);
+//   };
+
+//   if (USERS.length === 0) { // Check if there's no user in USERS array, then create new user
+//     userCreation(); // actual user is created
+//   } else {
+//     // Iterate USERS storage to find if there's a user with the submitted email
+//     let user =undefined;
+//     USERS.forEach((elements, index, array) => {
+//       if(elements.email === email){
+//         user = USERS[index];
+//       }
+//     });
+
+//     if(user !=undefined){
+//       res.status(409).send({ // user already exist
+//           status: 'error',
+//           error: `User with email ${email} already exist please use different credentials`,
+//         });
+//     }else{
+//       userCreation(); // actual user is created
+//     }
+//   }
+// };
+
+
+
+
+//Signin user  using data from datas tructure
 const signin = (req, res) => {
   if (USERS.length === 0){
    return res.status(404).send({
@@ -100,7 +220,8 @@ const signin = (req, res) => {
    });
 };
 
-export default { signup, signin };
+*/
+
 
 
 /*

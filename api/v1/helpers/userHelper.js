@@ -23,4 +23,13 @@ const userOutput = (
   return result;
 };
 
-export {userOutput};
+
+// when something goes wrong in a try block of asyn function
+const serverError =(error, res) => {
+  return res.status(500).json({
+    'status': 'error',
+    'error': `something went wrong  ${error}`
+  })
+};
+
+export {userOutput, serverError};

@@ -1,17 +1,19 @@
 import express from 'express';
 import mocha from 'mocha';
 import path from 'path';
+import dotenv from 'dotenv';
 import userRouter from './routes/user';
 import propertyRouter from './routes/property';
+import {pool,connectionString} from './models/configDB';
 
-
+dotenv.config(); //load .env Variables
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use('/api/v1/auth', userRouter);
 app.use('/api/v1/property', propertyRouter);
-const port = 8000;
+const port = 5000||process.env.PORT;
 
 
 // error middleware functions
