@@ -1,12 +1,3 @@
-/*****************
-BLOCKERS for tomorrow 03/09/2019
-write try and catch in every async await promise function
-findout how to resolve "cannot set headers after they are sent to the client ERRORR" 
-This error can actually be resolve using the console for output, 
-but my api specifications needs response to be send to the client browser not console 
-******************/
-
-//property contoller
 import uuidv1 from 'uuid/v1';
 import multer from 'multer';
 import JWT from 'jsonwebtoken';
@@ -15,6 +6,121 @@ import {operationSucess, noPropertyError, noPermissionError} from '../helpers/pr
 //import {checkTokens, decodedToken} from '../middleware/auth';
 import {verifyUser} from '../helpers/jwtAuthHelper';
 import Joi from 'joi';
+
+
+
+
+/*
+...................................................
+IMPLEMENTATION USING PERSISTENT STORAGE IE POSTGRESQL DATABASE
+...............................................................
+*/
+
+
+//post property
+const postProperty = (req, res) => {
+  const id = uuidv1();
+  const {token, status, type, state, city, address, price} = req.body;
+  try{
+    console.log('happening here only');
+    // verify user with the tokens sent
+    const decoded = verifyUser(token, res);
+    // create property
+
+
+  }catch(error){
+   res.status(500).json('something bit bad');
+  }
+
+};
+
+
+// update some selected fields with new data
+const updateProperty = (req, res) => {
+  const id = uuidv1();
+  const {token, status, type, state, city, address, price} = req.body;
+  try{
+    console.log('happening here only');
+
+  }catch(error){
+   res.status(500).json('something bit bad');
+  }
+
+};
+
+// change property status from available to sold
+const markSold = (req, res) => {
+  const id = uuidv1();
+  const {token, status, type, state, city, address, price} = req.body;
+  try{
+    console.log('happening here only');
+
+  }catch(error){
+   res.status(500).json('something bit bad');
+  }
+
+};
+
+// delete property of a given id
+const deleteProperty = (req, res) => {
+  const id = uuidv1();
+  const {token, status, type, state, city, address, price} = req.body;
+  try{
+    console.log('happening here only');
+
+  }catch(error){
+   res.status(500).json('something bit bad');
+  }
+
+};
+
+// get all property
+const getAllProperty = (req, res) => {
+  const id = uuidv1();
+  const {token, status, type, state, city, address, price} = req.body;
+  try{
+    console.log('happening here only');
+
+  }catch(error){
+   res.status(500).json('something bit bad');
+  }
+
+};
+
+// get all property of the same type
+const getAllSpecificTypesProperty = (req, res) => {
+  const id = uuidv1();
+  const {token, status, type, state, city, address, price} = req.body;
+  try{
+    console.log('happening here only');
+
+  }catch(error){
+   res.status(500).json('something bit bad');
+  }
+
+};
+
+// view property details
+const viewPropertyDetails = (req, res) => {
+  const id = uuidv1();
+  const {token, status, type, state, city, address, price} = req.body;
+  try{
+    console.log('happening here only');
+
+  }catch(error){
+   res.status(500).json('something bit bad');
+  }
+
+};
+
+//export default {postProperty};
+
+export default {postProperty, updateProperty, markSold, deleteProperty, getAllProperty, getAllSpecificTypesProperty, viewPropertyDetails};
+
+/*
+......................................
+IMPLEMENTATION WITH NON PERSISTENT STORAGE
+............................................
 
 // create new property
 const postProperty = async (req, res, next) => {
@@ -132,9 +238,9 @@ const deleteProperty = async (req, res) => {
         if(property===undefined) return noPropertyError(id, res);
         //verify user
         if(decoded.email != property.ownerEmail) return noPermissionError(id, res);
-        propertyStorage.splice(indexP,1); /*pop() and delete weren't useful in this case 
-                                          pop() removed only last element in the array
-                                          delete removed the element at the intended loc, but leaves traces in the array*/
+        propertyStorage.splice(indexP,1); //pop() and delete weren't useful in this case 
+                                          //pop() removed only last element in the array
+                                          //delete removed the element at the intended loc, but leaves traces in the array
         operationSucess(res);
       }catch ( error){
         res.status(500).send({'status': 'error', 'error':`Something went wrong ${error}`});
@@ -190,3 +296,5 @@ const viewPropertyDetails = async (req, res) =>{
 }
 
 export default {postProperty, updateProperty, markSold, deleteProperty, getAllProperty, getAllSpecificTypesProperty, viewPropertyDetails};
+
+*/
