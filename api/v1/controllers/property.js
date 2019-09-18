@@ -2,7 +2,7 @@ import uuidv1 from 'uuid/v1';
 import multer from 'multer';
 import JWT from 'jsonwebtoken';
 import {propertyStorage, Property} from '../models/Property';
-import {operationSucess, noPropertyError, noPermissionError} from '../helpers/propertyHelper';
+import {operationSucess, noPropertyError, noPermissionError, serverError} from '../helpers/propertyHelper';
 //import {checkTokens, decodedToken} from '../middleware/auth';
 import {verifyUser} from '../helpers/jwtAuthHelper';
 import Joi from 'joi';
@@ -16,106 +16,163 @@ IMPLEMENTATION USING PERSISTENT STORAGE IE POSTGRESQL DATABASE
 ...............................................................
 */
 
+// No property error, identifiers for either id or type
+const idIdentifier = 'id';
+const typeIdentifier='type';
 
 //post property
-const postProperty = (req, res) => {
+const postProperty = async (req, res) => {
   const id = uuidv1();
-  const {token, status, type, state, city, address, price} = req.body;
+  const {token, status, type, state, city, address, price} = req.body; // improvements, check if input is empty
   try{
-    console.log('happening here only');
+    console.log('happening here only '+ (type===''));
     // verify user with the tokens sent
-    const decoded = verifyUser(token, res);
+    var decoded = verifyUser(token, res);
+    if(decoded===undefined) return res.status(404).json({'status': 'error', 'error': 'no token for the user'});
     // create property
-
-
+    const created_on = new Date();
+    const image_url = req.file.path;
+    const email = decoded.email;
+    // we convert all type field value to lower case because we will use to easy user searching for specific property
+    // that means any search type will be converted 
+    const newProperty = new Property(id, status.toLowerCase(), type.toLowerCase(), state, city, address, price, created_on, image_url, email);
+     await newProperty.createProperty();
+     return res.status(201).json({'status': 'success', 'data':{ id, status, type, state, city, address, price, created_on,image_url, email}});
   }catch(error){
-   res.status(500).json('something bit bad');
+   serverError(error, res);
   }
 
 };
 
 
 // update some selected fields with new data
-const updateProperty = (req, res) => {
+const updateProperty = async (req, res) => {
   const id = uuidv1();
   const {token, status, type, state, city, address, price} = req.body;
   try{
-    console.log('happening here only');
+     // get content of token
+    const {propertyId} =req.params;
+    const {token, type, price}  = req.body.data;
+    const decoded = verifyUser(token, res);
+    if(decoded===undefined) return noPermissionError(propertyId, res);
+    const property = new Property();
+    const dataEmail = await property.getPropertyDetails(propertyId); //used to get property with the given id
+    // check if property  with given id is available
+    if(dataEmail.rows.length===0) return noPropertyError(propertyId, res, idIdentifier);
+    // compare emails(logged in user email , and property creation email) to ensure user delete only their property
+    if(decoded.email != dataEmail.rows[0].owner_email) return noPermissionError(propertyId, res);
+    // can update property attributes
+    await property.updateProperty(type, price, propertyId);
+    operationSucess(res);
 
   }catch(error){
-   res.status(500).json('something bit bad');
+   serverError(error, res);
   }
 
 };
 
 // change property status from available to sold
-const markSold = (req, res) => {
-  const id = uuidv1();
-  const {token, status, type, state, city, address, price} = req.body;
+const markSold = async (req, res) => {
   try{
-    console.log('happening here only');
-
+    // get content of token
+    const {propertyId} =req.params;
+    const {token}  = req.body.data;
+    const decoded = verifyUser(token, res);
+    if(decoded===undefined) return noPermissionError(propertyId, res);
+    const property = new Property();
+    const dataEmail = await property.getPropertyDetails(propertyId);
+    // check if property  with given id is available
+    if(dataEmail.rows.length===0) return noPropertyError(propertyId, res, idIdentifier);
+    // compare emails(logged in user email , and property creation email) to ensure user delete only their property
+    if(decoded.email != dataEmail.rows[0].owner_email) return noPermissionError(propertyId, res);
+    // can update status to SOLD
+    if(dataEmail.rows[0].status==='sold') return res.status(400).json({'status': 'error', 'error': 'Property status is already in SOLD'});
+    const status = 'sold';
+    await property.changeToSold(status, propertyId);
+    operationSucess(res);
+  
   }catch(error){
-   res.status(500).json('something bit bad');
+   serverError(error, res);
   }
 
 };
 
 // delete property of a given id
-const deleteProperty = (req, res) => {
-  const id = uuidv1();
-  const {token, status, type, state, city, address, price} = req.body;
+const deleteProperty = async (req, res) => {
+  const {propertyId} = req.params;
+  const {token} = req.body.data;
   try{
-    console.log('happening here only');
-
+    // get content of token
+    const decoded = verifyUser(token, res);
+    if(decoded===undefined) return noPermissionError(propertyId, res);
+    const property = new Property();
+    const dataEmail = await property.getPropertyDetails(propertyId);
+    // check if property  with given id is available
+    if(dataEmail.rows.length===0) return noPropertyError(propertyId, res, idIdentifier);
+    // compare emails(logged in user email , and property creation email) to ensure user delete only their property
+    if(decoded.email != dataEmail.rows[0].owner_email) return noPermissionError(propertyId, res);
+    // can delete property ie user own this property
+    await property.deleteProperty(propertyId);
+    operationSucess(res);
   }catch(error){
-   res.status(500).json('something bit bad');
+   serverError(error, res);
   }
 
 };
 
-// get all property
-const getAllProperty = (req, res) => {
-  const id = uuidv1();
-  const {token, status, type, state, city, address, price} = req.body;
+// get all property, no auth needed
+const getAllProperty =  async (req, res) => {
   try{
-    console.log('happening here only');
-
+    const allProperty = new Property();
+    const data = await allProperty.getAllProperty();
+    if(data.rows.length===0) return res.status(404).json({'status':'error', 'error': 'No property found'});
+    res.status(200).json({'status': 'success', data: data.rows});
   }catch(error){
-   res.status(500).json('something bit bad');
+   serverError(error, res);
   }
 
 };
 
-// get all property of the same type
-const getAllSpecificTypesProperty = (req, res) => {
-  const id = uuidv1();
-  const {token, status, type, state, city, address, price} = req.body;
+// get all property of the same type, no auth token needed. this operation is public
+const getAllSpecificTypesProperty = async (req, res) => {
+  const {type} = req.query;
   try{
-    console.log('happening here only');
-
+    const allSameType = new Property();
+    const data = await allSameType.getPropertyByType(type.toLowerCase());
+    if(data.rows.length===0) return noPropertyError(type, res, typeIdentifier);
+    res.status(200).json({ 'status': 'success', 'data': data.rows});
   }catch(error){
-   res.status(500).json('something bit bad');
+    serverError(error, res);
   }
 
 };
 
 // view property details
-const viewPropertyDetails = (req, res) => {
-  const id = uuidv1();
-  const {token, status, type, state, city, address, price} = req.body;
+const viewPropertyDetails = async (req, res) => {
+  // get id from the request params
+  const {propertyId} = req.params;
   try{
-    console.log('happening here only');
+    const viewDetails = new Property();
+    const data = await viewDetails.getPropertyDetails(propertyId);
+    if(data.rows.length===0) return noPropertyError(propertyId, res, idIdentifier);
+    res.status(200).json({ 'status': 'success', 'data': data.rows});
 
   }catch(error){
-   res.status(500).json('something bit bad');
+   serverError(error, res);
   }
 
 };
 
-//export default {postProperty};
-
 export default {postProperty, updateProperty, markSold, deleteProperty, getAllProperty, getAllSpecificTypesProperty, viewPropertyDetails};
+
+
+
+
+
+
+
+
+
 
 /*
 ......................................

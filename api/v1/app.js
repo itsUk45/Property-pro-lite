@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use('/api/v1/auth', userRouter);
 app.use('/api/v1/property', propertyRouter);
-const port = 5000||process.env.PORT;
+const port = 3000||process.env.PORT;
 
 
 // error middleware functions

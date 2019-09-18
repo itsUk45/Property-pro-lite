@@ -49,10 +49,10 @@ const validateSignin = (req, res,next) =>{
 //post property
 const postPropertyV = (postData) => {
   const schema = {
-  	data:{
+  
   		'status': Joi.string().required(),
-  		city: Joi.string().required()
-  	}
+  		'city': Joi.string().required()
+  
   }
   return Joi.validate(postData, schema);
 

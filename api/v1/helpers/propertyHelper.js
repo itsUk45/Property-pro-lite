@@ -7,11 +7,11 @@ const operationSucess = (res) => {
     });
 };
 
-//NO Property found Error message, 404 not found
-const noPropertyError = (propertyId, res) => {
+//NO Property found Error message, the third parameter 'identifier' classifies id and type during error display
+const noPropertyError = (propertyId, res, identifier) => {
   return res.status(404).json({
         'status':'error',
-        'error': `Property with id ${propertyId} Not Found`
+        'error': `Property with ${identifier} ${propertyId} Not Found`
       });
 };
 
@@ -24,4 +24,11 @@ const noPermissionError = (propertyID, res) => {
   });
 };
 
-export {operationSucess, noPropertyError, noPermissionError};
+const serverError = (err, res) => {
+  return res.status(500).json({
+    'status': 'error',
+    'error': `Something bad occurred  ${err}`
+  });
+}
+
+export {operationSucess, noPropertyError, noPermissionError, serverError};
