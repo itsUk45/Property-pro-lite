@@ -3,7 +3,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
 import fs from 'fs';
-import { Users, USERS } from '../models/Users';
+import { User } from '../models/Users';
 import { propertyStorage, Property } from '../models/Property';
 import {GenerateTokens} from '../helpers/jwtAuthHelper';
 
@@ -16,16 +16,14 @@ describe('PROPERTY TEST api/v1/property', () => {
 	// before anything is done, please signup a user
 	let token, newUser, newP;
 	before( async() => {
-    newUser  = new  Users(1,'kose@gmail.com','kose', 'uk45', 12345, 'KG101', 'yes', 'M', 12345);
+    newUser  = new  User(1,'kose11@gmail.com','kose', 'uk45', 12345, 'KG101', 'yes', 'M', 12345);
     await newUser.createUser();
-    token = GenerateTokens('kose@gmail.com');
+    token = GenerateTokens('kose11@gmail.com');
 
-    newP =new Property(1, 'Available', 'Room', 'Central', 'KK', 'KK Central', 121,'12/09/19', 'image_url', 'kose@gmail.com');
+    newP =new Property(1, 'Available', 'Room', 'Central', 'KK', 'KK Central', 121,'12/09/19', 'image_url', 'kose11@gmail.com');
     newP.createProperty();
 	});
 
-	console.log(USERS);
-	console.log(token);
 
 	 it('POST api/v1/property Should create property when all fields are not empty', (done) => {
     chai
